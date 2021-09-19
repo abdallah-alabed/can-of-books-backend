@@ -1,18 +1,24 @@
-'use strict';
+"use strict";
 
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
+require("dotenv").config();
+
+const express = require("express");
+const cors = require("cors");
 
 const app = express();
 app.use(cors());
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT 
+const mongoose=require("mongoose");
+const MONGO_SERVER=process.env.MONGO_SERVER
 
-app.get('/test', (request, response) => {
+const { bookController } = require("./controllers/Book.controller");
 
-  response.send('test request received')
+mongoose.connect(`${MONGO_SERVER}/books`,{useNewUrlParser: true, useUnifiedTopology: true});
 
-})
+
+app.get('/books',bookController)
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
+
+
